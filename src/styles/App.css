@@ -1,0 +1,66 @@
+.App {
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 25px #3a9fc4;
+
+}
+
+.App-intro {
+    height: calc(100vh - 50px);
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+}
+.CategoryForm{
+    margin: 20px;
+}
+.Categories{
+
+}
+
+.sidebar {
+    width: 25%;
+    box-sizing: content-box;
+    padding-right: 1%;
+    height: 100%;
+    background: #434753;
+}
+.content{
+    width: 74%;
+    height: 100%;
+    background: #f1f5f8;
+}
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 20px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 50px;
+    display: flex;
+    padding: 0 20px;
+    align-items: center;
+    justify-content: space-between;
+    line-height: 20px;
+    color: white;
+}
+.toggle-tasks{
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

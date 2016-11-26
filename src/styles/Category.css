@@ -1,0 +1,17 @@
+.Category {
+    cursor: pointer;
+    line-height: 20px;
+    background: #fff;
+    padding: 0 10px;
+    border-bottom: 1px solid grey;
+}
+
+.Category .fa {
+    line-height: 20px;
+    margin-left: 5px;
+}
+
+.Category .fa-plus, .Category .fa-trash-o {
+    float: right;
+
+}
