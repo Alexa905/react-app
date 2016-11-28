@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/InputForm.css';
 
 class Form extends React.Component {
     constructor() {
@@ -12,9 +13,15 @@ class Form extends React.Component {
         return (
             <div className="InputForm">
                 <form action="" onSubmit={this.addItem.bind(this)}>
-                    <input type="text" value={this.state.value} onChange={this.handleChange.bind(this)}
-                           placeholder={this.props.placeholder}/>
-                    <button type="submit">Add</button>
+                    <div className="mdl-textfield mdl-js-textfield">
+                        <input className="mdl-textfield__input" type="text" value={this.state.value}
+                               onChange={this.handleChange.bind(this)}
+                               placeholder={this.props.placeholder}/>
+                        <button type="submit"
+                                className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                            Add
+                        </button>
+                    </div>
                 </form>
             </div>
         );

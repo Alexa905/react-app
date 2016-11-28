@@ -1,17 +1,39 @@
 .Category {
+    line-height: 30px;
     cursor: pointer;
-    line-height: 20px;
-    background: #fff;
-    padding: 0 10px;
-    border-bottom: 1px solid grey;
+    color:  #2196F3
 }
 
 .Category .fa {
-    line-height: 20px;
-    margin-left: 5px;
+    line-height: 30px;
+    margin-left: 10px;
 }
 
 .Category .fa-plus, .Category .fa-trash-o {
     float: right;
 
 }
+.Category a{
+    color: white;
+    text-decoration: none;
+    line-height: 30px;
+
+}
+.Category a:hover{
+    color: white;
+    text-decoration: none;
+}
+ul{
+    margin: 0;
+    padding: 0;
+    margin-left: 22px;
+}
+ul li{
+    height: 25px;
+}
+/*
+.Category:hover{
+    color: white;
+    text-decoration: none;
+    background: rgba(33,150,243,.26);
+}*/

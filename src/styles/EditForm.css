@@ -1,0 +1,17 @@
+.EditForm div{
+    margin-bottom: 15px;
+}
+.inputText{
+    width: 40%;
+}
+
+.buttons{
+    text-align: right;
+}
+.buttons button{
+    margin-left: 10px;
+}
+.buttons button a{
+    text-decoration: none;
+    color: white;
+}

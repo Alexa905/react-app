@@ -3,6 +3,7 @@
     background-color: #fff;
     border-radius: 3px;
     box-shadow: 0 0 25px #3a9fc4;
+    width: 1280px;
 
 }
 
@@ -12,32 +13,38 @@
     overflow: hidden;
     flex-direction: row;
 }
-.CategoryForm{
+
+.CategoryForm {
     margin: 20px;
 }
-.Categories{
+
+.Categories {
 
 }
 
 .sidebar {
     width: 25%;
     box-sizing: content-box;
-    padding-right: 1%;
     height: 100%;
+    overflow: auto;
     background: #434753;
+    padding: 20px;
 }
-.content{
+
+.content {
     width: 74%;
-    height: 100%;
+overflow: hidden;
     background: #f1f5f8;
+    padding: 15px;
 }
+
 .App-logo {
     animation: App-logo-spin infinite 20s linear;
     height: 20px;
 }
 
 .App-header {
-    background-color: #222;
+    background-color: #2196F3;
     height: 50px;
     display: flex;
     padding: 0 20px;
@@ -46,14 +53,25 @@
     line-height: 20px;
     color: white;
 }
-.toggle-tasks{
+
+.toggle-tasks {
     margin-left: auto;
     margin-right: 20px;
 }
 
-h2 {
+.search-tasks {
+    padding-top: 20px;
+    /* line-height: 18px; */
+    color: white;
+    padding-left: 40px;
+}
+
+.App-header h2 {
     margin: 0;
     padding: 0;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: capitalize;
 }
 
 @keyframes App-logo-spin {
@@ -63,4 +81,34 @@ h2 {
     to {
         transform: rotate(360deg);
     }
+}
+
+.content-inner {
+    background: white;
+    color: black;
+    padding: 20px;
+    overflow: auto;
+    height: 90%;
+}
+
+
+.content-inner .InputForm {
+
+    text-align: right;
+
+}
+input[type='checkbox']{
+    margin-right: 10px;
+}
+input[type='text'], textarea{
+    padding-left: 5px;
+}
+
+
+.mdl-button {
+    right: -5px;
+}
+
+textarea{
+    width: 100%;
 }

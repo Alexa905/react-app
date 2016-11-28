@@ -1,0 +1,14 @@
+.InputForm{
+
+}
+.content-inner .mdl-textfield{
+    width: 50%;
+}
+.mdl-textfield{
+     padding-right: 60px;
+ }
+.sidebar input{
+    border-bottom: 1px solid #676D76;
+    color: white;
+}
+
