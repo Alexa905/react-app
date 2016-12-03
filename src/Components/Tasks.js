@@ -19,18 +19,24 @@ class TasksList extends React.Component {
 
     }
 
+    handleChange(catIndex, taskIndex) {
+        this.props.categories[catIndex].tasks[taskIndex].active = !this.props.categories[catIndex].tasks[taskIndex].active;
+    }
+
     getTasks() {
         var activeCatIndex = this.props.params.id;
-        var activeSubCatIndex = this.props.params.subId;
+
         if (activeCatIndex) {
-            var category = activeSubCatIndex ? this.props.categories[activeCatIndex].categories[activeSubCatIndex] : this.props.categories[activeCatIndex];
-            return category && category.tasks.map((task, index) => {
-                    return (<div className="Task" key={category.name + index}>
-                        <input type="checkbox" defaultChecked={task.active}/>
-                        <span>{task.name} </span>
-                        <Link to={`/category-${activeCatIndex}/task-${index}`}> <i className="fa fa-pencil-square-o"> </i></Link>
-                    </div>);
-                });
+            var tasks = this.props.tasks.filter(function (task) {
+                return task.categoryId == activeCatIndex;
+            });
+            return tasks.map((task, index) => {
+                return (<div className="Task" key={task.name + index}>
+                    <input type="checkbox" onChange={this.handleChange.bind(this, task.id)} defaultChecked={task.active}/>
+                    <span>{task.name} </span>
+                    <Link to={`/task-${index}`}> <i className="fa fa-pencil-square-o"> </i></Link>
+                </div>);
+            });
         }
     }
 

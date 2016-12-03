@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 
 import '../styles/App.css';
 import InputForm from './InputForm.js';
@@ -8,34 +9,40 @@ import Categories from './Categories.js';
 class ToDoList extends Component {
     constructor() {
         super();
+        this.handleSearch = this.handleSearch.bind(this);
         this.state = {
+            search: '',
             activeCategoryIndex: null,
+            tasks: [{name: 'Item1', active: true, categoryId: 0}, {name: 'Item2', categoryId: 0},
+                {categoryId: 1, name: 'Item3', active: true}, {categoryId: 1, name: 'Item4'},
+                {categoryId: 2, name: '200', active: true}, {categoryId: 2, name: 'Item2000'},
+                {categoryId: 3, name: '300', active: true}, {categoryId: 3, name: 'Item40000'}],
             categories: [{
                 id: 0,
-                name: 'My first Category',
-                tasks: [{name: 'Item1', active: true}, {name: 'Item2'}]
+                name: 'My first Category'
             }, {
                 id: 1,
-                name: 'Home tasks',
-                tasks: [{name: 'Item3', active: true}, {name: 'Item4'},],
-                categories: [{
-                    name: 'SubCategory 1',
-                    tasks: [{name: '200', active: true}, {name: 'Item2000'}]
-                }, {
-                    name: 'SubCategory 2',
-                    tasks: [{name: '300', active: true}, {name: 'Item40000'},]
-                }]
+                name: 'Home tasks'
+            }, {
+                id: 2,
+                parentId: 1,
+                name: 'SubCategory 1'
+            }, {
+                id: 3,
+                parentId: 1,
+                name: 'SubCategory 2',
             }],
             editMode: false
         };
     }
 
     render() {
-        var state = this.state;
         this.state.editMode = this.props.location.pathname.indexOf('task') !== -1;
-        const children = React.Children.map(this.props.children, function (child) {
+        const children = React.Children.map(this.props.children, (child)=> {
             return React.cloneElement(child, {
-                categories: state.categories
+                props: this.props,
+                categories: this.state.categories,
+                tasks: this.state.tasks
             })
         });
         return (
@@ -43,28 +50,34 @@ class ToDoList extends Component {
                 {!this.state.editMode && <Header title='Todo-list'>
                     <div className="toggle-tasks">
                         <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                            <input type="checkbox" defaultValue={false} id="switch-2" className="mdl-switch__input"/>
-                                <span className="mdl-switch__label">     Show active</span>
+                            <input type="checkbox" defaultValue={false} className="mdl-switch__input"/>
+                            <span className="mdl-switch__label"> Show active</span>
 
                         </label>
                     </div>
-                    <div className="search-tasks"><input className="mdl-textfield__input" type="text" placeholder="Search"/>
-                        <i className="fa fa-icon-remove"> </i></div>
+                    <div className="search-tasks"><input className="mdl-textfield__input search-input" type="text"
+                                                         onChange={this.handleSearch} ref="searchInput"
+                                                         placeholder="Search" value={this.state.search}/>
+                        {this.state.search && <i onClick={this.clearSearch.bind(this)} className="fa fa-remove"> </i>}
+                    </div>
                 </Header>}
                 {this.state.editMode && <Header title='Edit task'/>}
 
                 <div className="App-intro">
                     <div className="sidebar">
-                        {!this.state.editMode && <InputForm addItem={this.addCategory.bind(this)} placeholder="Add new category"/>}
-                        <Categories categories={this.state.categories} setActive={this.setActiveCategory.bind(this)}
-                                    deleteCategory={this.deleteCategory.bind(this)} editMode={this.state.editMode}/>
+                        {!this.state.editMode &&
+                        <InputForm addItem={this.addCategory.bind(this)} placeholder="Add new category"/>}
+                        <Categories categories={this.state.categories} addCategory={this.addSubCategory.bind(this)}
+                                    deleteCategory={this.deleteCategory.bind(this)}
+                                    update={this.updateCategory.bind(this)} editMode={this.state.editMode}/>
                     </div>
                     <div className="content">
                         <div className="content-inner">
 
-                        {children && !this.state.editMode &&  <InputForm addItem={this.addTask.bind(this)} placeholder="Add new task"/>}
+                            {children && !this.state.editMode &&
+                            <InputForm addItem={this.addTask.bind(this)} placeholder="Add new task"/>}
 
-                        {children}
+                            {children}
                         </div>
                     </div>
                 </div>
@@ -73,10 +86,21 @@ class ToDoList extends Component {
     }
 
     addCategory(categoryName) {
-        var newCategory = {id: this.state.categories.length, name: categoryName, tasks: []};
+        var newCategory = {id: this.state.categories.length, name: categoryName};
         this.setState({
             categories: this.state.categories.concat([newCategory])
         });
+    }
+
+    handleSearch(e) {
+        this.setState({
+            search: e.target.value
+        });
+    }
+
+    clearSearch() {
+        this.setState({search: ''});
+        ReactDOM.findDOMNode(this.refs.searchInput).focus();
     }
 
     addTask(taskName) {
@@ -99,6 +123,24 @@ class ToDoList extends Component {
     setActiveCategory(index) {
         this.setState({
             activeCategoryIndex: index
+        });
+    }
+
+    updateCategory(index, name) {
+        var categories = this.state.categories;
+        var category = categories[index];
+        category.name = name;
+        this.setState({
+            categories: categories
+        });
+    }
+
+    addSubCategory(index, name) {
+        var categories = this.state.categories;
+        var category = categories[index];
+        category.name = name;
+        this.setState({
+            categories: categories
         });
     }
 

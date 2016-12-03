@@ -23,12 +23,16 @@
     color: white;
     text-decoration: none;
 }
-ul{
+.Category a.active{
+    color: red;
+    text-decoration: none;
+}
+.Category ul{
     margin: 0;
     padding: 0;
     margin-left: 22px;
 }
-ul li{
+.Category ul li{
     height: 25px;
 }
 /*
@@ -37,3 +41,6 @@ ul li{
     text-decoration: none;
     background: rgba(33,150,243,.26);
 }*/
+.Category input[type='text']{
+    color: #000;
+}

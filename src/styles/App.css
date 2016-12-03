@@ -59,13 +59,6 @@ overflow: hidden;
     margin-right: 20px;
 }
 
-.search-tasks {
-    padding-top: 20px;
-    /* line-height: 18px; */
-    color: white;
-    padding-left: 40px;
-}
-
 .App-header h2 {
     margin: 0;
     padding: 0;
@@ -110,5 +103,28 @@ input[type='text'], textarea{
 }
 
 textarea{
+    width: 100%;
+}
+.search-tasks {
+    line-height: 18px;
+    width: 200px;
+    height: 26px;
+    color: white;
+    position: relative;
+    margin-left: 40px;
+}
+.fa-remove{
+    top: 6px;
+    right: 0;
+    position: absolute;
+}
+
+.fa{
+    cursor: pointer;
+}
+.search-tasks .search-input{
+    padding-left: 5px;
+    padding-right: 20px;
+    box-sizing: border-box;
     width: 100%;
 }

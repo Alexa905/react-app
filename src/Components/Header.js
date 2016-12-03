@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from '../../public/images/logo.svg';
 class Header extends React.Component {
-    constructor() {
+/*    constructor() {
         super();
-    }
+    }*/
 
     render() {
         return (

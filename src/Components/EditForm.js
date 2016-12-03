@@ -7,15 +7,15 @@ class ToDoList extends Component {
         var task = this.getTask();
         return (
             <div className="EditForm">
-                <form action="">
+                <form action="" onSubmit={this.updateTask.bind(this)}>
                     <div className="buttons">
                         <button type="submit"
                                 className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
                             Save
                         </button>
-                        <button
+                        <Link to={`/`}> <button
                             className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-                            <Link to={`/`}><span>Cancel</span></Link></button>
+                           Cancel</button></Link>
                     </div>
                     <div className="inputText"><input className="mdl-textfield__input" type="text" defaultValue={task.name}/></div>
                     <div><input type="checkbox" defaultValue={task.active}/>Done</div>
@@ -24,6 +24,12 @@ class ToDoList extends Component {
                 </form>
             </div>
         );
+    }
+
+    updateTask(){
+        var catIndex = this.props.params.categoryId;
+        var taskIndex = this.props.params.taskId;
+        delete this.props.categories[catIndex].tasks[taskIndex]
     }
 
     getTask() {

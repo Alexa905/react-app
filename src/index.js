@@ -10,8 +10,7 @@ ReactDOM.render((
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <Route path="category-:id" component={Tasks}/>
-                <Route path="category-:categoryId/task-:taskId" component={EditTask}/>
-                <Route path="category-:id/:subId" component={Tasks}/>
+                <Route path="task-:taskId" component={EditTask}/>
             </Route>
         </Router>
     ), document.getElementById('root')
