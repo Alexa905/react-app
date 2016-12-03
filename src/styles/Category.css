@@ -27,7 +27,7 @@
     text-decoration: none;
 }
 .Category a.active{
-    color: red;
+    color: #E91E63;
     text-decoration: none;
 }
 .Category ul{

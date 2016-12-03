@@ -19,8 +19,8 @@ class TasksList extends React.Component {
 
     }
 
-    handleChange(catIndex, taskIndex) {
-        this.props.categories[catIndex].tasks[taskIndex].active = !this.props.categories[catIndex].tasks[taskIndex].active;
+    handleChange(taskIndex) {
+        this.props.tasks[taskIndex].active = !this.props.tasks[taskIndex].active;
     }
 
     getTasks() {
@@ -32,7 +32,7 @@ class TasksList extends React.Component {
             });
             return tasks.map((task, index) => {
                 return (<div className="Task" key={task.name + index}>
-                    <input type="checkbox" onChange={this.handleChange.bind(this, task.id)} defaultChecked={task.active}/>
+                    <input type="checkbox" onChange={this.handleChange.bind(this, index)} defaultChecked={task.active}/>
                     <span>{task.name} </span>
                     <Link to={`/task-${index}`}> <i className="fa fa-pencil-square-o"> </i></Link>
                 </div>);

@@ -27,15 +27,13 @@ class ToDoList extends Component {
     }
 
     updateTask(){
-        var catIndex = this.props.params.categoryId;
         var taskIndex = this.props.params.taskId;
-        delete this.props.categories[catIndex].tasks[taskIndex]
+        delete this.props.tasks[taskIndex]
     }
 
     getTask() {
-        var catIndex = this.props.params.categoryId;
         var taskIndex = this.props.params.taskId;
-        return this.props.categories[catIndex].tasks[taskIndex]
+        return this.props.tasks[taskIndex]
     }
 
 }
