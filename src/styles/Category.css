@@ -1,9 +1,12 @@
 .Category {
     line-height: 30px;
     cursor: pointer;
-    color:  #2196F3
+    color:  #2196F3;
+    position: relative;
 }
-
+.child{
+    margin-left: 20px;
+}
 .Category .fa {
     line-height: 30px;
     margin-left: 10px;
@@ -31,6 +34,11 @@
     margin: 0;
     padding: 0;
     margin-left: 22px;
+}
+.Category .fa-caret-down{
+    position: absolute;
+    margin: 0;
+    left: -13px;
 }
 .Category ul li{
     height: 25px;

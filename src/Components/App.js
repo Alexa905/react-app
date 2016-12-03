@@ -22,16 +22,23 @@ class ToDoList extends Component {
                 name: 'My first Category'
             }, {
                 id: 1,
-                name: 'Home tasks'
-            }, {
-                id: 2,
-                parentId: 1,
-                name: 'SubCategory 1'
-            }, {
-                id: 3,
-                parentId: 1,
-                name: 'SubCategory 2',
-            }],
+                name: 'Home tasks',
+                childNodes: [{
+                    id: 2,
+                    parentId: 1,
+                    name: 'SubCategory 1'
+                }, {
+                    id: 3,
+                    parentId: 1,
+                    name: 'SubCategory 2',
+                    childNodes: [{
+                        id: 4,
+                        parentId: 1,
+                        name: 'SubCategory 2-1'
+                    }]
+                }]
+            }
+            ],
             editMode: false
         };
     }
@@ -86,7 +93,7 @@ class ToDoList extends Component {
     }
 
     addCategory(categoryName) {
-        var newCategory = {id: this.state.categories.length, name: categoryName};
+        var newCategory = {id: Math.random().toString(36).substr(2, 10), name: categoryName};
         this.setState({
             categories: this.state.categories.concat([newCategory])
         });
@@ -113,32 +120,58 @@ class ToDoList extends Component {
         });
     }
 
-    deleteCategory(index) {
-        this.state.categories.splice(index, 1);
-        this.setState({
-            categories: this.state.categories
-        });
-    }
-
-    setActiveCategory(index) {
-        this.setState({
-            activeCategoryIndex: index
-        });
-    }
-
-    updateCategory(index, name) {
+    deleteCategory(id) {
         var categories = this.state.categories;
-        var category = categories[index];
-        category.name = name;
+        findCategory(categories);
+        function findCategory(categories) {
+            categories.forEach(function (cat, index) {
+                if (cat.id === id) {
+                    categories.splice(index, 1);
+                }
+                else if (cat.childNodes) {
+                    findCategory(cat.childNodes)
+                }
+            });
+        }
         this.setState({
             categories: categories
         });
     }
 
-    addSubCategory(index, name) {
+    updateCategory(id, name) {
         var categories = this.state.categories;
-        var category = categories[index];
-        category.name = name;
+        findCategory(categories);
+        function findCategory(categories) {
+            categories.forEach(function (cat) {
+                if (cat.id === id) {
+                    name = !!name ? name : 'new category';
+                    cat.name = name;
+                }
+                else if (cat.childNodes) {
+                    findCategory(cat.childNodes)
+                }
+            });
+        }
+        this.setState({
+            categories: categories
+        });
+    }
+
+    addSubCategory(id) {
+        var categories = this.state.categories;
+        findCategory(categories);
+        function findCategory(categories) {
+            categories.forEach(function (cat) {
+                if (cat.id === id) {
+                    cat.childNodes = cat.childNodes || [];
+                    var newCategory = {id: Math.random().toString(36).substr(2, 10), name: 'new category'};
+                    cat.childNodes.push(newCategory);
+                }
+                else if (cat.childNodes) {
+                    findCategory(cat.childNodes)
+                }
+            });
+        }
         this.setState({
             categories: categories
         });

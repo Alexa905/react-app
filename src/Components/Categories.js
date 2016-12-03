@@ -6,19 +6,18 @@ class Categories extends React.Component {
     render() {
         const categories = this.getCategories();
         return (
-            <ul className="Categories">
+            <div className="Categories">
                 {categories || []}
-            </ul>
+            </div>
         );
     }
 
     getCategories() {
         return this.props.categories.map((cat, index) => {
-            if(!cat.parentId) {
-                return (
-                    <Category delete={this.props.deleteCategory} update={this.props.update} key={cat.name + index}
-                              cat={cat} index={index}/>);
-            }
+            return (
+                <Category delete={this.props.deleteCategory} update={this.props.update} add={this.props.addCategory} key={cat.name + index}
+                          node={cat} index={index}/>);
+
         });
     }
 }
