@@ -1,45 +1,45 @@
 import React from 'react';
 import '../styles/TaskList.css';
-import {Link} from 'react-router'
+import InputForm from './InputForm.js';
+import Task from './Task.js';
+import {connect} from 'react-redux';
+import {addTask, updateTask} from '../actions';
+const matchFilter = (filter, task) => (!filter || task.name.match(filter));
+const matchState = (state, task) => (!state || !task.done);
+const mapStateToProps = ({tasks, taskFilter, toggleState}, {params: {id}}) => ({
+    tasks: tasks.filter(t => t.categoryId.toString() === id && matchFilter(taskFilter, t) && matchState(toggleState, t))
+});
+
+
+
+const mapDispatchToProps = dispatch => ({
+    addTask: name => dispatch(addTask(name)),
+    updateTask: (task) => dispatch(updateTask(task))
+});
 
 class TasksList extends React.Component {
-    constructor() {
-        super();
-        this.state = {};
-    }
-
     render() {
-        const tasks = this.getTasks();
-        return (
-            <div className="TaskList">
-                {tasks || []}
+        return (<div>
+                <InputForm addItem={this.addTask.bind(this)} placeholder="Add new task"/>
+                <div className="TaskList">
+                    {this.props.tasks.map((task, i) => {
+                        return (<Task item={task} key={task.name + i} update={this.update.bind(this, task.id)}/>);
+                    })}
+                </div>
             </div>
-
         )
-
     }
 
-    handleChange(taskIndex) {
-        this.props.tasks[taskIndex].active = !this.props.tasks[taskIndex].active;
+    update(id, done) {
+        this.props.updateTask({id, done})
     }
 
-    getTasks() {
-        var activeCatIndex = this.props.params.id;
-
-        if (activeCatIndex) {
-            var tasks = this.props.tasks.filter(function (task) {
-                return task.categoryId == activeCatIndex;
-            });
-            return tasks.map((task, index) => {
-                return (<div className="Task" key={task.name + index}>
-                    <input type="checkbox" onChange={this.handleChange.bind(this, index)} defaultChecked={task.active}/>
-                    <span>{task.name} </span>
-                    <Link to={`/task-${index}`}> <i className="fa fa-pencil-square-o"> </i></Link>
-                </div>);
-            });
-        }
+    addTask(taskName) {
+        this.props.addTask({
+            categoryId: this.props.params.id,
+            name: taskName
+        })
     }
 
 }
-
-export default TasksList;
+export default connect(mapStateToProps, mapDispatchToProps)(TasksList);

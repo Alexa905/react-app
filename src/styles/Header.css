@@ -1,0 +1,36 @@
+.toolbar-wrapper{
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex: 1;
+    margin-bottom: 10px;
+}
+
+.Header a{
+    text-decoration: none;
+    color: white;
+}
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 20px;
+}
+
+.Header {
+    background-color: #2196F3;
+    height: 70px;
+    display: flex;
+    flex-flow: row;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    color: white;
+    flex-flow: column;
+}
+
+.Header h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+

@@ -1,0 +1,45 @@
+.toolbar {
+    display: flex;
+}
+
+.toolbar .mdl-switch.is-checked .mdl-switch__track {
+    background: #23d24e;
+}
+
+.toolbar .toggle-tasks {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.search-tasks {
+    line-height: 18px;
+    width: 200px;
+    height: 26px;
+    color: white;
+    position: relative;
+    margin-left: 40px;
+}
+
+.fa-remove {
+    top: 6px;
+    right: 0;
+    position: absolute;
+}
+
+.fa {
+    cursor: pointer;
+}
+
+.search-tasks .search-input {
+    padding-left: 5px;
+    padding-right: 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.toolbar input[type='text'], textarea {
+    padding-left: 5px;
+}
+.toolbar ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: white;
+}

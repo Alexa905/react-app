@@ -1,19 +1,36 @@
 .Task{
-    height: 45px;
-    line-height: 45px;
+    min-height: 45px;
     border: 1px solid gainsboro;
-    padding: 0 10px;
+    padding: 12px 10px;
     border-bottom: 1px solid #E1E2E4;
     border-top: 1px solid #E1E2E4;
     cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+
 }
 .Task:hover{
     background-color: #E8F7FB;
 }
 .Task .fa-pencil-square-o{
-    float: right;
-    line-height: 45px;
+
 }
 .Task input{
    margin-right: 10px;
 }
+
+.Task a{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    margin: auto;
+    right:15px;
+    width: 14px;
+    height: 14px;
+}
+.Task .description{
+    display: block;
+    font-size: 10px;
+    padding-left: 23px;
+}
+

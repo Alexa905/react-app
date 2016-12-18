@@ -1,6 +1,6 @@
 import React from 'react';
 import  '../styles/Category.css';
-import {Link} from 'react-router'
+import {Link} from 'react-router';
 
 class Category extends React.Component {
 
@@ -21,71 +21,74 @@ class Category extends React.Component {
     edit() {
         this.setState({
             editMode: true
-        })
+        });
     }
 
-    deleteCategory(index) {
-        this.props.delete(index);
+    deleteCategory(id) {
+        this.props.delete(id);
     }
 
-    handleChange(e) {
-        this.setState({
-            name: e.target.value
-        })
+    saveChanges(e, id) {
+        var value = e.target.value;
+        if (value) {
+            this.props.update(id, value);
+            this.setState({
+                editMode: false
+            })
+        }
     }
 
-    saveChanges(id) {
-        this.props.update(id, this.state.name);
-        this.setState({
-            editMode: false
-        })
+    handleKeyPress(e, id) {
+        if (e.charCode === 13) {
+            this.saveChanges(e, id);
+        }
     }
 
     add(id) {
         this.props.add(id);
     }
 
+    updateTask(categoryId, task) {
+        let updatedTask = Object.assign({}, task, {categoryId});
+        this.props.updateTask(updatedTask);
+    }
+
     render() {
-        var childNodes;
-        var classObj;
-
-        if (this.props.node.childNodes != null) {
-            childNodes = this.props.node.childNodes.map( (node, index)=> {
-                return <Category delete={this.props.delete} add={this.props.add} update={this.props.update}  key={index} node={node}/>
+        let props = this.props;
+        let task = props.editTask;
+        let childNodes = props.node.childNodes && props.node.childNodes.map((node, index)=> {
+                return <Category delete={this.props.delete}
+                                 editTask={this.props.editTask}
+                                 updateTask={this.props.updateTask}
+                                 add={this.props.add}
+                                 update={this.props.update}
+                                 key={index}
+                                 node={node}/>
             });
-
-            classObj = {
-                togglable: true,
-                "togglable-down": this.state.visible,
-                "togglable-up": !this.state.visible
-            };
-        }
-
-        var style;
-        if (!this.state.visible) {
-            style = {display: "none"};
-        }
+        let categoryTools = task ?
+            (<span className={(task.categoryId === props.node.id) && 'active'}>{props.node.name}<i
+                className="fa fa-hand-o-left" onClick={this.updateTask.bind(this, props.node.id, task)}/></span>) :
+            this.state.editMode ? (<input autoFocus type="text" ref="name" defaultValue={props.node.name}
+                                          onBlur={e => this.saveChanges(e, props.node.id)}
+                                          onKeyPress={e => this.handleKeyPress(e, props.node.id)}/>) :
+                (<span><Link activeClassName="active" to={`/category-${props.node.id}`}>
+                    <span>{props.node.name}</span> </Link>
+                <i onClick={this.deleteCategory.bind(this, props.node.id)} className="fa fa-trash-o"> </i>
+                <i className="fa fa-plus" onClick={this.add.bind(this, props.node.id)}> </i>
+                <i onClick={this.edit.bind(this)} className="fa fa-pencil-square-o"> </i>
+            </span>);
 
         return (
             <div className="Category">
-                {this.props.node.childNodes &&<i  className="fa fa-caret-down" onClick={this.toggle}> </i>}
-                {!this.state.editMode && <Link activeClassName="active" to={`/category-${this.props.node.id}`}> <span>{this.props.node.name}</span></Link>}
-                {!this.state.editMode &&
-                <i onClick={this.deleteCategory.bind(this, this.props.node.id)} className="fa fa-trash-o"> </i>}
-                {!this.state.editMode && <i className="fa fa-plus" onClick={this.add.bind(this, this.props.node.id)}> </i> }
-                {!this.state.editMode && <i onClick={this.edit.bind(this)} className="fa fa-pencil-square-o"> </i>}
-                {this.state.editMode &&
-                <input type="text" defaultValue={this.props.node.name} onChange={this.handleChange.bind(this)}
-                       onBlur={this.saveChanges.bind(this, this.props.node.id)}/>}
-                <div className='child' style={style}>
+                {props.node.childNodes &&
+                <i className={this.state.visible ? "fa fa-caret-down" : "fa fa-caret-right"} onClick={this.toggle}> </i>}
+                {categoryTools}
+                <div className='child' style={this.state.visible ? {display: "block"} : {display: "none"}}>
                     {childNodes}
                 </div>
             </div>
         );
     }
-
-
 }
-
 
 export default Category;

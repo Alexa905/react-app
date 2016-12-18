@@ -1,41 +1,62 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router'
 import '../styles/EditForm.css';
-class ToDoList extends Component {
+import {connect} from 'react-redux';
+import {updateTask, setEditTask} from '../actions';
+import ReactDOM from 'react-dom';
 
+const mapStateToProps = ({tasks}) => ({
+    tasks
+});
+
+const mapDispatchToProps = dispatch => ({
+    updateTask: (task) => dispatch(updateTask(task)),
+    setEditTask: (task) => dispatch(setEditTask(task))
+});
+
+class EditForm extends Component {
+    componentDidMount(){
+        let task = this.getTask()[0];
+        this.props.setEditTask(task);
+    }
+    componentWillUnmount(){
+        this.props.setEditTask(null);
+    }
     render() {
-        var task = this.getTask();
+        let task = this.getTask()[0];
         return (
             <div className="EditForm">
                 <form action="" onSubmit={this.updateTask.bind(this)}>
                     <div className="buttons">
-                        <button type="submit"
-                                className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                        <button type="submit" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
                             Save
                         </button>
-                        <Link to={`/`}> <button
-                            className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-                           Cancel</button></Link>
+                        <button type="reset" onClick={this.props.router.goBack} className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                           Cancel</button>
                     </div>
-                    <div className="inputText"><input className="mdl-textfield__input" type="text" defaultValue={task.name}/></div>
-                    <div><input type="checkbox" defaultValue={task.active}/>Done</div>
-                    <textarea className="mdl-textfield__input" type="text" rows="10" id="sample5"
-                              defaultValue={task.description} placeholder="Description"></textarea>
+                    <div className="inputText">
+                        <input className="mdl-textfield__input" ref="name" type="text" defaultValue={task.name}/></div>
+                    <div><input type="checkbox" defaultChecked={task.done} ref="checkbox"/>Done</div>
+                    <textarea ref="description" className="mdl-textfield__input" type="text" rows="10" id="sample5"
+                              defaultValue={task.description} placeholder="Description"/>
                 </form>
             </div>
         );
     }
 
-    updateTask(){
-        var taskIndex = this.props.params.taskId;
-        delete this.props.tasks[taskIndex]
+    updateTask(e){
+        var task = this.getTask()[0];
+        var active = ReactDOM.findDOMNode(this.refs.checkbox).checked;
+        var name = ReactDOM.findDOMNode(this.refs.name).value;
+        var description = ReactDOM.findDOMNode(this.refs.description).value;
+        this.props.updateTask({id:task.id, active, name, description});
+        this.props.router.push(`/category-${task.categoryId}`);
+        e.preventDefault();
     }
 
     getTask() {
-        var taskIndex = this.props.params.taskId;
-        return this.props.tasks[taskIndex]
+        var taskId = this.props.params.taskId;
+        return this.props.tasks.filter(task=>taskId === task.id.toString())
     }
 
 }
-
-export default ToDoList;
+export default connect(mapStateToProps, mapDispatchToProps)(EditForm);

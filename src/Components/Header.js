@@ -1,24 +1,29 @@
 import React from 'react';
-import logo from '../../public/images/logo.svg';
-class Header extends React.Component {
-/*    constructor() {
-        super();
-    }*/
+import Toolbar from './Toolbar';
+import ProgressBar from './ProgressBar';
+import {Link} from 'react-router'
+import '../styles/Header.css';
+import {connect} from 'react-redux';
 
+const mapStateToProps = ({editTask}) => ({
+    editTask
+});
+class Header extends React.Component {
     render() {
+        let task = this.props.editTask;
         return (
-            <div className="App-header">
-                <h2>{this.props.title} <img src={logo} className="App-logo" alt="logo"/></h2>
-                {this.props.children}
+            <div className="Header">
+                <div className="toolbar-wrapper">
+                <h2><Link to={`/`}> {task ? task.name : 'Travel ToDo List'}</Link></h2>
+                    {!task && <Toolbar/>}
+                </div>
+                <div className="progressbar-wrapper">
+                {!task && <ProgressBar/>}
+                </div>
             </div>
         );
     }
 
 }
 
-
-// Uncomment properties you need
-// FirstComponent.propTypes = {};
-// FirstComponent.defaultProps = {};
-
-export default Header;
+export default connect(mapStateToProps)(Header);
