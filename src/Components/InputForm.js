@@ -21,7 +21,7 @@ class Form extends React.Component {
 
     addItem(event) {
         event.preventDefault();
-        var input = ReactDOM.findDOMNode(this.refs.input);
+        let input = ReactDOM.findDOMNode(this.refs.input);
         if (input.value) {
             this.props.addItem(input.value);
             input.value = '';

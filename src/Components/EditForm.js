@@ -1,26 +1,17 @@
 import React, {Component} from 'react';
 import '../styles/EditForm.css';
-import {connect} from 'react-redux';
 import {updateTask, setEditTask} from '../actions';
 import ReactDOM from 'react-dom';
-
-const mapStateToProps = ({tasks}) => ({
-    tasks
-});
-
-const mapDispatchToProps = dispatch => ({
-    updateTask: (task) => dispatch(updateTask(task)),
-    setEditTask: (task) => dispatch(setEditTask(task))
-});
 
 class EditForm extends Component {
     componentDidMount(){
         let task = this.getTask()[0];
-        this.props.setEditTask(task);
+        setEditTask(task);
     }
     componentWillUnmount(){
-        this.props.setEditTask(null);
+        setEditTask(null);
     }
+
     render() {
         let task = this.getTask()[0];
         return (
@@ -44,19 +35,19 @@ class EditForm extends Component {
     }
 
     updateTask(e){
-        var task = this.getTask()[0];
-        var active = ReactDOM.findDOMNode(this.refs.checkbox).checked;
-        var name = ReactDOM.findDOMNode(this.refs.name).value;
-        var description = ReactDOM.findDOMNode(this.refs.description).value;
-        this.props.updateTask({id:task.id, active, name, description});
-        this.props.router.push(`/category-${task.categoryId}`);
         e.preventDefault();
+        let task = this.getTask()[0];
+        let active = ReactDOM.findDOMNode(this.refs.checkbox).checked;
+        let name = ReactDOM.findDOMNode(this.refs.name).value;
+        let description = ReactDOM.findDOMNode(this.refs.description).value;
+        updateTask({id:task.id, done: active, name, description});
+        this.props.router.push(`/category-${task.categoryId}`);
     }
 
     getTask() {
-        var taskId = this.props.params.taskId;
-        return this.props.tasks.filter(task=>taskId === task.id.toString())
+        let taskId = this.props.params.taskId;
+        return this.props.store.tasks.filter(task=>taskId === task.id.toString())
     }
 
 }
-export default connect(mapStateToProps, mapDispatchToProps)(EditForm);
+export default EditForm;

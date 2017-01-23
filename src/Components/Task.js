@@ -18,7 +18,7 @@ class Task extends React.Component {
     }
 
     handleChange() {
-        var input = ReactDOM.findDOMNode(this.refs.checkbox);
+        let input = ReactDOM.findDOMNode(this.refs.checkbox);
         this.props.update(input.checked);
     }
 

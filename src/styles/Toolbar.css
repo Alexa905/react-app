@@ -8,7 +8,6 @@
 
 .toolbar .toggle-tasks {
     margin-left: auto;
-    margin-right: 20px;
 }
 
 .search-tasks {
@@ -42,4 +41,8 @@
 }
 .toolbar ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: white;
+}
+.toolbar .mdl-switch__label{
+    left:0;
+    line-height: 28px;
 }

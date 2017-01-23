@@ -1,11 +1,11 @@
 export let data = {
-    tasks: [{id: 1, categoryId: 2, name: 'Poland', done: true},
+    tasks: [{id: 1, categoryId: 2, name: 'Poland', done: true, description: 'My second home country'},
         {id: 2, categoryId: 2, name: 'Ukraine', done: true},
-        {id: 3, categoryId: 2, name: 'Belarus', done: true},
+        {id: 3, categoryId: 2, name: 'Belarus', done: true, description: 'My homeland'},
         {id: 4, categoryId: 2, name: 'Russia', done: true},
-        {id: 5, categoryId: 2, name: 'Romania'},
-        {id: 6, categoryId: 2, name: 'Moldova'},
-        {id: 7, categoryId: 2, name: 'Czech Republic', done: true},
+        {id: 5, categoryId: 2, name: 'Romania', done: true},
+        {id: 6, categoryId: 2, name: 'Moldova', done: true},
+        {id: 7, categoryId: 2, name: 'Czech Republic', done: true, description:'Prague - the most beautiful city in Europe'},
         {id: 8, categoryId: 2, name: 'Hungary', done: true},
         {id: 9, categoryId: 2, name: 'Slovakia', done: true},
         {id: 12, categoryId: 4, name: 'Macedonia'},
@@ -58,9 +58,9 @@ export let data = {
         {id: 58, categoryId: 22, name: 'Jordan'},
         {id: 59, categoryId: 22, name: 'United Arab Emirates'},
         {id: 60, categoryId: 31, name: 'Moon'},
-        {id: 60, categoryId: 31, name: 'Earth', done: true},
-        {id: 60, categoryId: 31, name: 'Mars'},
-        {id: 60, categoryId: 31, name: 'Venus'},
+        {id: 61, categoryId: 31, name: 'Earth', done: true},
+        {id: 62, categoryId: 31, name: 'Mars'},
+        {id: 63, categoryId: 31, name: 'Venus'},
 
 
     ],
@@ -127,5 +127,8 @@ export let data = {
         }
 
         ]
-    }]
+    }],
+    editTask:null,
+    taskFilter:null,
+    toggleState:false
 };

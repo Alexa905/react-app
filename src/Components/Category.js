@@ -29,7 +29,7 @@ class Category extends React.Component {
     }
 
     saveChanges(e, id) {
-        var value = e.target.value;
+        let value = e.target.value;
         if (value) {
             this.props.update(id, value);
             this.setState({
@@ -56,7 +56,7 @@ class Category extends React.Component {
     render() {
         let props = this.props;
         let task = props.editTask;
-        let childNodes = props.node.childNodes && props.node.childNodes.map((node, index)=> {
+        let childNodes = props.node.childNodes && props.node.childNodes.length>0 && props.node.childNodes.map((node, index)=> {
                 return <Category delete={this.props.delete}
                                  editTask={this.props.editTask}
                                  updateTask={this.props.updateTask}
@@ -80,8 +80,7 @@ class Category extends React.Component {
 
         return (
             <div className="Category">
-                {props.node.childNodes &&
-                <i className={this.state.visible ? "fa fa-caret-down" : "fa fa-caret-right"} onClick={this.toggle}> </i>}
+                {childNodes && <i className={this.state.visible ? "fa fa-caret-down" : "fa fa-caret-right"} onClick={this.toggle}> </i>}
                 {categoryTools}
                 <div className='child' style={this.state.visible ? {display: "block"} : {display: "none"}}>
                     {childNodes}
