@@ -1,14 +1,17 @@
 import React, { PropTypes, Component } from 'react'
-import App from '../Components/App'
+import EditForm from '../Components/EditForm'
 import { shallow } from 'enzyme';
 import {Provider} from 'react-redux'
+import {data} from '../stubData';
 const store = {subscribe: function(){}, dispatch: function(){}, getState: function(){} };
 
-describe('App Component', () => {
+describe('EditForm Component', () => {
     let Component;
 
     beforeEach(() => {
-        Component = shallow(<Provider store={store}><App/></Provider>)
+        Component = shallow(<Provider store={store}>
+            <EditForm tasks={data.tasks}/>
+            </Provider>)
 
     });
 

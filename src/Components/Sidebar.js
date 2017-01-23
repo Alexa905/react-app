@@ -3,26 +3,40 @@ import ReactDOM from 'react-dom';
 import  '../styles/Category.css';
 import Category from './Category.js'
 import InputForm from './InputForm.js';
-import {addCategory, addSubCategory, deleteCategory, updateCategory, updateTask, setEditTask} from '../actions';
+import {connect} from 'react-redux';
+import * as actions from '../actions';
+
+const mapStateToProps = ({categories, editTask}) => ({
+    categories: categories.present, editTask: editTask.present
+});
+
+const mapDispatchToProps = dispatch => ({
+    addCategory: name => dispatch(actions.addCategory(name)),
+    addSubCategory: id => dispatch(actions.addSubCategory(id)),
+    deleteCategory: id => dispatch(actions.deleteCategory(id)),
+    updateCategory: (id, name) => dispatch(actions.updateCategory(id, name)),
+    updateTask: (task) => dispatch(actions.updateTask(task)),
+    setEditTask: (task) => dispatch(actions.setEditTask(task)),
+    deleteTasks: (task) => dispatch(actions.deleteTasks(task))
+});
 
 const Sidebar = React.createClass({
     componentDidUpdate() {
-        let el = ReactDOM.findDOMNode(this.refs.add);
+        const el = ReactDOM.findDOMNode(this.refs.add);
         if (el) el.focus();
     },
     render() {
         let props = this.props;
-        let categories = props.store.categories;
         return (<div className='Sidebar'>
-            <InputForm addItem={addCategory} placeholder="Add new category"/>
+            <InputForm addItem={props.addCategory} placeholder="Add new category"/>
             <div className="Categories">
-                {categories.map((cat, i) =>
-                    <Category key={cat.name + i}
-                              update={updateCategory}
-                              editTask={props.store.editTask}
+                {props.categories.map((category, i) =>
+                    <Category key={category.name + i}
+                              update={props.updateCategory}
+                              editTask={props.editTask}
                               updateTask={this.updateTask}
-                              node={cat}
-                              add={addSubCategory}
+                              node={category}
+                              add={props.addSubCategory}
                               delete={this.deleteCategory}/>
                 )}
             </div>
@@ -32,23 +46,22 @@ const Sidebar = React.createClass({
     createCategory(evt) {
         if (evt.which !== 13) return;
         let name = ReactDOM.findDOMNode(this.refs.add).value;
-        addCategory(name);
+        this.props.addCategory(name);
     },
 
     updateTask(updatedTask) {
-        updateTask(updatedTask);
-        setEditTask(updatedTask);
+        this.props.updateTask(updatedTask);
+        this.props.setEditTask(updatedTask);
     },
 
-    deleteCategory(id){
+    deleteCategory(categoryId) {
         let confirmation = confirm('Are you sure to delete this category?');
         if(confirmation){
-            deleteCategory(id);
+            this.props.deleteCategory(categoryId);
+            this.props.deleteTasks(categoryId);
         }
-
-
     }
 
 });
 
-export default Sidebar;
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

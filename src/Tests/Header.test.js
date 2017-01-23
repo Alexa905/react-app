@@ -1,14 +1,16 @@
 import React, { PropTypes, Component } from 'react'
-import App from '../Components/App'
+import Header from '../Components/Header'
 import { shallow } from 'enzyme';
 import {Provider} from 'react-redux'
 const store = {subscribe: function(){}, dispatch: function(){}, getState: function(){} };
 
-describe('App Component', () => {
+describe('Header Component', () => {
     let Component;
 
     beforeEach(() => {
-        Component = shallow(<Provider store={store}><App/></Provider>)
+        Component = shallow(<Provider store={store}>
+            <Header editTask={{}}/>
+            </Provider>)
 
     });
 

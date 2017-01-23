@@ -1,17 +1,26 @@
 import React, {Component} from 'react';
 import '../styles/EditForm.css';
+import {connect} from 'react-redux';
 import {updateTask, setEditTask} from '../actions';
 import ReactDOM from 'react-dom';
+
+const mapStateToProps = ({tasks}) => ({
+    tasks: tasks.present
+});
+
+const mapDispatchToProps = dispatch => ({
+    updateTask: (task) => dispatch(updateTask(task)),
+    setEditTask: (task) => dispatch(setEditTask(task))
+});
 
 class EditForm extends Component {
     componentDidMount(){
         let task = this.getTask()[0];
-        setEditTask(task);
+        this.props.setEditTask(task);
     }
     componentWillUnmount(){
-        setEditTask(null);
+        this.props.setEditTask(null);
     }
-
     render() {
         let task = this.getTask()[0];
         return (
@@ -35,19 +44,19 @@ class EditForm extends Component {
     }
 
     updateTask(e){
-        e.preventDefault();
         let task = this.getTask()[0];
-        let active = ReactDOM.findDOMNode(this.refs.checkbox).checked;
+        let done = ReactDOM.findDOMNode(this.refs.checkbox).checked;
         let name = ReactDOM.findDOMNode(this.refs.name).value;
         let description = ReactDOM.findDOMNode(this.refs.description).value;
-        updateTask({id:task.id, done: active, name, description});
+        this.props.updateTask({id:task.id, done, name, description});
         this.props.router.push(`/category-${task.categoryId}`);
+        e.preventDefault();
     }
 
     getTask() {
         let taskId = this.props.params.taskId;
-        return this.props.store.tasks.filter(task=>taskId === task.id.toString())
+        return this.props.tasks.filter(task=>taskId === task.id.toString())
     }
 
 }
-export default EditForm;
+export default connect(mapStateToProps, mapDispatchToProps)(EditForm);

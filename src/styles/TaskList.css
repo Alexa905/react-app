@@ -33,4 +33,8 @@
     font-size: 10px;
     padding-left: 23px;
 }
+.highlighted{
+    background-color: #fdff8b;
+    font-style: normal;
+}
 

@@ -1,11 +1,11 @@
 export let data = {
     tasks: [{id: 1, categoryId: 2, name: 'Poland', done: true, description: 'My second home country'},
         {id: 2, categoryId: 2, name: 'Ukraine', done: true},
-        {id: 3, categoryId: 2, name: 'Belarus', done: true, description: 'My homeland'},
+        {id: 3, categoryId: 2, name: 'Belarus', done: true},
         {id: 4, categoryId: 2, name: 'Russia', done: true},
-        {id: 5, categoryId: 2, name: 'Romania', done: true},
-        {id: 6, categoryId: 2, name: 'Moldova', done: true},
-        {id: 7, categoryId: 2, name: 'Czech Republic', done: true, description:'Prague - the most beautiful city in Europe'},
+        {id: 5, categoryId: 2, name: 'Romania'},
+        {id: 6, categoryId: 2, name: 'Moldova'},
+        {id: 7, categoryId: 2, name: 'Czech Republic', done: true},
         {id: 8, categoryId: 2, name: 'Hungary', done: true},
         {id: 9, categoryId: 2, name: 'Slovakia', done: true},
         {id: 12, categoryId: 4, name: 'Macedonia'},
@@ -127,8 +127,5 @@ export let data = {
         }
 
         ]
-    }],
-    editTask:null,
-    taskFilter:null,
-    toggleState:false
+    }]
 };

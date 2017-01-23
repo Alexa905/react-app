@@ -1,14 +1,14 @@
 import React, { PropTypes, Component } from 'react'
-import App from '../Components/App'
+import UndoRedoBtns from '../Components/UndoRedoBtns'
 import { shallow } from 'enzyme';
 import {Provider} from 'react-redux'
 const store = {subscribe: function(){}, dispatch: function(){}, getState: function(){} };
 
-describe('App Component', () => {
+describe('UndoRedoBtns Component', () => {
     let Component;
 
     beforeEach(() => {
-        Component = shallow(<Provider store={store}><App/></Provider>)
+        Component = shallow(<Provider store={store}><UndoRedoBtns/></Provider>)
 
     });
 

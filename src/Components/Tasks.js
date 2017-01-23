@@ -2,34 +2,47 @@ import React from 'react';
 import '../styles/TaskList.css';
 import InputForm from './InputForm.js';
 import Task from './Task.js';
+import {connect} from 'react-redux';
 import {addTask, updateTask} from '../actions';
-const matchFilter = (filter, task) => (!filter || task.name.toLowerCase().match(filter));
-const matchState = (state, task) => (!state || task.done);
+import UndoRedoBtns from './UndoRedoBtns.js';
+
+const matchFilter = (filter, task) => (!filter || (task.name.toLowerCase().match(filter.toLowerCase())));
+const matchState = (state, task) => (!state || !task.done);
+const mapStateToProps = ({tasks, taskFilter, toggleState}, {params: {categoryId}}) => ({
+    tasks: tasks.present.filter(t => t.categoryId.toString() === categoryId && matchFilter(taskFilter.present, t) &&
+    matchState(toggleState.present, t)),
+    filter: taskFilter.present
+});
+
+const mapDispatchToProps = dispatch => ({
+    addTask: name => dispatch(addTask(name)),
+    updateTask: (task) => dispatch(updateTask(task))
+});
 
 class TasksList extends React.Component {
     render() {
-        let tasks =this.props.store.tasks.filter(t => t.categoryId.toString() === this.props.params.id && matchFilter(this.props.store.taskFilter, t) && matchState(this.props.store.toggleState, t))
         return (<div>
                 <InputForm addItem={this.addTask.bind(this)} placeholder="Add new task"/>
                 <div className="TaskList">
-                    {tasks.map((task, i) => {
-                        return (<Task item={task} key={task.name + i} update={this.update.bind(this, task.id)}/>);
+                    {this.props.tasks.map((task, i) => {
+                        return (<Task item={task} key={task.name + i} filter={this.props.filter} update={this.update.bind(this, task.id)}/>);
                     })}
                 </div>
+                <UndoRedoBtns/>
             </div>
         )
     }
 
     update(id, done) {
-        updateTask({id, done})
+        this.props.updateTask({id, done})
     }
 
     addTask(taskName) {
-        addTask({
-            categoryId: this.props.params.id,
+        this.props.addTask({
+            categoryId: this.props.params.categoryId,
             name: taskName
         })
     }
 
 }
-export default TasksList;
+export default connect(mapStateToProps, mapDispatchToProps)(TasksList);
